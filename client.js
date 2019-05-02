@@ -40,6 +40,39 @@ const hello = (name) => {
   }).then((res) => res.json());
 };
 
+const changeName = (name) => {
+  const payload = {
+    query: `
+      fragment UserAttributes on User{
+        name
+      }
+
+      mutation changeName($input: ChangeNameInput) {
+        changeName(input: $input) {
+          ...UserAttributes
+        }
+      }
+    `,
+    variables: {
+      name: name
+    }
+  };
+
+  return fetch(`${GRAPHQL_ENDPOINT}/graphql`, {
+    method: 'POST',
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  }).then((res) => res.json());
+};
+
+
+
 hello('test').then((res) => {
+  console.log(res);
+});
+
+changeName('test').then((res) => {
   console.log(res);
 });

@@ -10,4 +10,12 @@ type Query {
   hello(name: String!): User
 }
 
+input ChangeNameInput {
+  name: String!
+}
+
+type Mutation {
+  changeName(input: ChangeNameInput): User
+}
+
 `);
