@@ -37,7 +37,7 @@ const hello = (name) => {
       "content-type": "application/json"
     },
     body: JSON.stringify(payload)
-  });
+  }).then((res) => res.json());
 };
 
 hello('test').then((res) => {
