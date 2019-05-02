@@ -1,0 +1,32 @@
+{
+  "name": "express-graphql-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "browserify client.js -o public/js/client.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holyshared/express-graphql-example.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/holyshared/express-graphql-example/issues"
+  },
+  "homepage": "https://github.com/holyshared/express-graphql-example#readme",
+  "dependencies": {
+    "es6-promise": "^4.2.6",
+    "express": "^4.16.4",
+    "express-graphql": "^0.8.0",
+    "graphql": "^14.2.1",
+    "graphql-upload": "^8.0.6",
+    "isomorphic-fetch": "^2.2.1"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3"
+  }
+}
