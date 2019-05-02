@@ -56,7 +56,9 @@ const changeName = (name) => {
       }
     `,
     variables: {
-      name: name
+      input: {
+        name: name
+      }
     }
   };
 
