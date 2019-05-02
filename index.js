@@ -9,6 +9,7 @@ const graphql = require('./graphql');
 
 const strategy = require("./passport");
 const sessionStore = require('./session-store');
+const graphqlUploadExpress = require("graphql-upload").graphqlUploadExpress;
 
 const app = express();
 
@@ -40,7 +41,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/graphql', graphql);
+app.use('/graphql', graphqlUploadExpress({ maxFileSize: 15 * 1024 * 1024, maxFiles: 10 }), graphql);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(process.env.PORT || 3000);
