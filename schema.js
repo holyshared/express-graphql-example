@@ -14,8 +14,13 @@ input ChangeNameInput {
   name: String!
 }
 
+input SignInInput {
+  name: String!
+}
+
 type Mutation {
   changeName(input: ChangeNameInput): User
+  signIn(input: SignInInput): User
 }
 
 `);

@@ -9,7 +9,28 @@ const changeName = (args) => {
   }
 };
 
+const signIn = (args, req) => {
+  const input = args.input;
+  const user = {
+    id: 1, 
+    name: input.name
+  };
+
+  return new Promise((resolve, reject) => {
+    req.login(user, (err) => {
+      if (err) {
+        return reject(err);
+      }
+console.log('login');
+      resolve({
+        name: input.name
+      });
+    });
+  });
+};
+
 module.exports = {
   hello: hello,
   changeName: changeName,
+  signIn: signIn,
 };

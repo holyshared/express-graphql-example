@@ -74,6 +74,40 @@ const changeName = (name) => {
 };
 
 
+const signIn = (name) => {
+  const payload = {
+    query: `
+      fragment UserAttributes on User{
+        name
+      }
+
+      mutation signIn($input: SignInInput) {
+        signIn(input: $input) {
+          ...UserAttributes
+        }
+      }
+    `,
+    variables: {
+      input: {
+        name: name
+      }
+    }
+  };
+
+  return fetch(`${GRAPHQL_ENDPOINT}/graphql`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer xyz`
+    },
+    body: JSON.stringify(payload)
+  }).then((res) => res.json());
+};
+
+signIn('test').then((res) => {
+  console.log(res);
+});
 
 hello('test').then((res) => {
   console.log(res);
