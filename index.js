@@ -1,17 +1,14 @@
 const express = require('express');
-const expressGraphql = require('express-graphql');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser'); 
 
-
-const schema = require('./schema');
-const rootValue = require('./root-value');
+const graphql = require('./graphql');
 
 const app = express();
 
+app.use(helmet());
 app.use(express.static("public"));
-app.use('/graphql', expressGraphql({
-  schema: schema,
-  graphiql: true,
-  rootValue: rootValue
-}));
+app.use(cookieParser(process.env.SESSION_SECRET || 'xyz'));
+app.use('/graphql', graphql);
 
 app.listen(process.env.PORT || 3000);
