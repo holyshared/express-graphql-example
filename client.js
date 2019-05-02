@@ -33,8 +33,10 @@ const hello = (name) => {
 
   return fetch(`${GRAPHQL_ENDPOINT}/graphql`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      authorization: `Bearer xyz`
     },
     body: JSON.stringify(payload)
   }).then((res) => res.json());
@@ -60,8 +62,10 @@ const changeName = (name) => {
 
   return fetch(`${GRAPHQL_ENDPOINT}/graphql`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      authorization: `Bearer xyz`
     },
     body: JSON.stringify(payload)
   }).then((res) => res.json());
