@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser'); 
 
 const session = require("express-session");
+const bodyParser = require("body-parser");
 const passport = require("passport");
 const graphql = require('./graphql');
 
@@ -40,5 +41,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/graphql', graphql);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(process.env.PORT || 3000);
