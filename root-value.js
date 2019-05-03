@@ -21,7 +21,6 @@ const signIn = (args, req) => {
       if (err) {
         return reject(err);
       }
-console.log('login');
       resolve({
         name: input.name
       });
