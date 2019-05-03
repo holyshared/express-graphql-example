@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/holyshared/express-graphql-example#readme",
   "dependencies": {
+    "basic-auth-connect": "^1.0.0",
     "body-parser": "^1.19.0",
     "connect-redis": "^3.4.1",
     "cookie-parser": "^1.4.4",

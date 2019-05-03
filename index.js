@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const graphql = require('./graphql');
 
+const basicAuth = require("basic-auth-connect");
 const strategy = require("./passport");
 const sessionStore = require('./session-store');
 const graphqlUploadExpress = require("graphql-upload").graphqlUploadExpress;
@@ -15,6 +16,14 @@ const app = express();
 
 passport.use(strategy);
 
+app.set("trust proxy", 1); // trust first proxy
+
+const user = process.env.USERNAME;
+const pass = process.env.PASSWORD;
+
+if (user && pass) {
+  app.use(basicAuth(user, pass));
+}
 
 const SESSION_SECRET = process.env.SESSION_SECRET || 'xyz';
 
