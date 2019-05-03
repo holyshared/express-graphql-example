@@ -35,7 +35,7 @@ const apiToken = findToken([
   embeddedToken(tokenType.nonProtected, "x-service-token")
 ]);
 
-const isBasicAuthProtected = apiToken.token === tokenType.basicAuthProtected;
+const isBasicAuthProtected = apiToken.type === tokenType.basicAuthProtected;
 
 const mergeHeaders = (base, extend) => [base, extend].reduce((acc, hds) => Object.assign(acc, hds), {});
 
