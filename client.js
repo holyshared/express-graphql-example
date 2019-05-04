@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     uploadAvator(file).then((res) => {
       console.log(res);
-      alert(`uploaded: ${res.name}`);
+      alert(`uploaded: ${res.data.uploadAvator.name}`);
     }).catch((err) => {
       alert(err.message);
     });

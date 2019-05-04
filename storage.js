@@ -17,7 +17,7 @@ const s3Options = process.env.NODE_ENV === "production" ? prodOptions : devOptio
 
 const s3 = new aws.S3(s3Options);
 
-const AWS_BUCKET = process.env.AWS_BUCKET || 'dev-bucktet';
+const AWS_BUCKET = process.env.AWS_BUCKET || 'dev-bucket';
 
 const uploadTo = async (key, content) => {
   const params = {
