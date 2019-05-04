@@ -1,4 +1,4 @@
-const aws = require("aws");
+const aws = require("aws-sdk");
 
 const devOptions = {
   endpoint: "http://localhost:4572",
@@ -15,7 +15,7 @@ const prodOptions = {
 
 const s3Options = process.env.NODE_ENV === "production" ? prodOptions : devOptions;
 
-const s3 = aws.S3(s3Options);
+const s3 = new aws.S3(s3Options);
 
 const AWS_BUCKET = process.env.AWS_BUCKET || 'dev-bucktet';
 
@@ -25,6 +25,9 @@ const uploadTo = async (key, content) => {
     Key: key,
     Body: content,
   };
+
+  console.log(AWS_BUCKET);
+  console.log(key);
 
   return new Promise((resolve, reject) => {
     s3.putObject(params, (err) => {

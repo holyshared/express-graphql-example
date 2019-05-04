@@ -150,7 +150,7 @@ const signIn = (name) => {
 };
 
 // file: File
-const upload = (file) => {
+const uploadAvator = (file) => {
   const payload = {
     query: `
       fragment UploadResultAttributes on UploadResult {
@@ -158,8 +158,8 @@ const upload = (file) => {
         name
       }
 
-      mutation upload($input: UploadInput) {
-        upload(input: $input) {
+      mutation uploadAvator($input: UploadInput) {
+        uploadAvator(input: $input) {
           ...UploadResultAttributes
         }
       }
@@ -177,9 +177,9 @@ const upload = (file) => {
   formData.append("operations", JSON.stringify(payload));
   formData.append(
     "map",
-    JSON.stringify({ "0": ["variables.input.file"], }),
+    JSON.stringify({ "file": ["variables.input.file"], }),
   );
-  formData.append(0, file);
+  formData.append("file", file);
 
   return fetch(`${GRAPHQL_ENDPOINT}/graphql`, {
     method: 'POST',
@@ -200,3 +200,17 @@ hello('test').then((res) => {
 changeName('test').then((res) => {
   console.log(res);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const avatorFile = document.getElementById("avatorFile");
+  avatorFile.addEventListener('change', (evt) => {
+    const file = evt.target.files[0];
+
+    uploadAvator(file).then((res) => {
+      console.log(res);
+      alert(`uploaded: ${res.name}`);
+    }).catch((err) => {
+      alert(err.message);
+    });
+  });
+}, false);

@@ -31,11 +31,12 @@ const signIn = (args, req) => {
   });
 };
 
-const upload = (args, req) => {
+const uploadAvator = (args, req) => {
   const input = args.input;
 
   return input.file.then((uploadFile) => {
-    return s3.uploadTo(v4(), uploadFile.createReadStream());
+    const stream = uploadFile.createReadStream();
+    return s3.uploadTo(v4(), stream);
   }).then((key) => {
     return {
       id: input.id,
@@ -48,5 +49,5 @@ module.exports = {
   hello: hello,
   changeName: changeName,
   signIn: signIn,
-  upload: upload,
+  uploadAvator: uploadAvator,
 };

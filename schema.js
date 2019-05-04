@@ -2,7 +2,7 @@ const graphql = require('graphql');
 
 module.exports = graphql.buildSchema(`
 
-scaler Upload
+scalar Upload
 
 type User {
   name: String
