@@ -52,7 +52,7 @@ const tokenHeaders = (function () {
 }());
 
 const jsonHeaders = mergeHeaders({ "content-type": "application/json" }, tokenHeaders);
-
+const formDataHeaders = tokenHeaders;
 
 const GRAPHQL_ENDPOINT = (function() {
   let protocol = "http:";
@@ -146,6 +146,46 @@ const signIn = (name) => {
     credentials: 'include',
     headers: jsonHeaders,
     body: JSON.stringify(payload)
+  }).then((res) => res.json());
+};
+
+// file: File
+const upload = (file) => {
+  const payload = {
+    query: `
+      fragment UploadResultAttributes on UploadResult {
+        id
+        name
+      }
+
+      mutation upload($input: UploadInput) {
+        upload(input: $input) {
+          ...UploadResultAttributes
+        }
+      }
+    `,
+    variables: {
+      input: {
+        id: "1",
+        file: null
+      }
+    }
+  };
+
+  const formData = new FormData();
+
+  formData.append("operations", JSON.stringify(payload));
+  formData.append(
+    "map",
+    JSON.stringify({ "0": ["variables.input.file"], }),
+  );
+  formData.append(0, file);
+
+  return fetch(`${GRAPHQL_ENDPOINT}/graphql`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: formDataHeaders,
+    body: formData
   }).then((res) => res.json());
 };
 
