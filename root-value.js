@@ -1,3 +1,6 @@
+const s3 = require("./storage"); 
+const v4 = require("uuid/v4"); 
+
 const hello = () => ({
   name: 'Hello world!'
 });
@@ -28,8 +31,22 @@ const signIn = (args, req) => {
   });
 };
 
+const upload = (args, req) => {
+  const input = args.input;
+
+  return input.file.then((uploadFile) => {
+    return s3.uploadTo(v4(), uploadFile.createReadStream());
+  }).then((key) => {
+    return {
+      id: input.id,
+      name: key
+    };
+  });
+}
+
 module.exports = {
   hello: hello,
   changeName: changeName,
   signIn: signIn,
+  upload: upload,
 };
