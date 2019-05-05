@@ -45,17 +45,11 @@ const streamToBuffer = (stream) => {
   });
 };
 
-const devUpload = (id, stream) => {
+const uploadFileBy = (id, stream) => {
   return streamToBuffer(stream).then(buf => {
     return s3.uploadTo(`${id}.jpg`, buf);
   });
 };
-
-const prodUpload = (id, stream) => s3.uploadTo(`${id}.jpg`, stream);
-
-// XXX: check on heroku
-//const uploadFileBy = process.env.NODE_ENV === 'production' ? prodUpload : devUpload;
-const uploadFileBy = prodUpload;
 
 const uploadAvator = (args, req) => {
   const input = args.input;
