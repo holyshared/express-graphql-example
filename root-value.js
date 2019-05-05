@@ -53,7 +53,9 @@ const devUpload = (id, stream) => {
 
 const prodUpload = (id, stream) => s3.uploadTo(`${id}.jpg`, stream);
 
-const uploadFileBy = process.env.NODE_ENV === 'production' ? prodUpload : devUpload;
+// XXX: check on heroku
+//const uploadFileBy = process.env.NODE_ENV === 'production' ? prodUpload : devUpload;
+const uploadFileBy = devUpload;
 
 const uploadAvator = (args, req) => {
   const input = args.input;
