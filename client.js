@@ -52,7 +52,7 @@ const tokenHeaders = (function () {
 }());
 
 const jsonHeaders = mergeHeaders({ "content-type": "application/json" }, tokenHeaders);
-
+const formDataHeaders = tokenHeaders;
 
 const GRAPHQL_ENDPOINT = (function() {
   let protocol = "http:";
@@ -149,6 +149,46 @@ const signIn = (name) => {
   }).then((res) => res.json());
 };
 
+// file: File
+const uploadAvator = (file) => {
+  const payload = {
+    query: `
+      fragment UploadResultAttributes on UploadResult {
+        id
+        name
+      }
+
+      mutation uploadAvator($input: UploadInput) {
+        uploadAvator(input: $input) {
+          ...UploadResultAttributes
+        }
+      }
+    `,
+    variables: {
+      input: {
+        id: "1",
+        file: null
+      }
+    }
+  };
+
+  const formData = new FormData();
+
+  formData.append("operations", JSON.stringify(payload));
+  formData.append(
+    "map",
+    JSON.stringify({ "file": ["variables.input.file"], }),
+  );
+  formData.append("file", file);
+
+  return fetch(`${GRAPHQL_ENDPOINT}/graphql`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: formDataHeaders,
+    body: formData
+  }).then((res) => res.json());
+};
+
 signIn('test').then((res) => {
   console.log(res);
 });
@@ -160,3 +200,17 @@ hello('test').then((res) => {
 changeName('test').then((res) => {
   console.log(res);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const avatorFile = document.getElementById("avatorFile");
+  avatorFile.addEventListener('change', (evt) => {
+    const file = evt.target.files[0];
+
+    uploadAvator(file).then((res) => {
+      console.log(res);
+      alert(`uploaded: ${res.data.uploadAvator.name}`);
+    }).catch((err) => {
+      alert(err.message);
+    });
+  });
+}, false);

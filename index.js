@@ -53,4 +53,14 @@ app.use(passport.session());
 app.use('/graphql', graphqlUploadExpress({ maxFileSize: 15 * 1024 * 1024, maxFiles: 10 }), graphql);
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(process.env.PORT || 3000);
+const server = app.listen(process.env.PORT || 3000);
+
+const processExit = () => {
+  if (!server) {
+    return;
+  }
+  server.close(() => process.exit());
+};
+
+process.on("SIGINT", processExit);
+process.on("SIGTERM", processExit);
